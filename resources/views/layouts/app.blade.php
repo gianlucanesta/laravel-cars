@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        IO SONO L'header
+        IO SONO L'headers
     </header>
     <main>
         @yield('main_content')
