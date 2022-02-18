@@ -38,6 +38,7 @@ class CarController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate($this->validator());
         $form_data = $request->all();
 
         $new_car = new Car();
@@ -59,6 +60,9 @@ class CarController extends Controller
     public function show($id)
     {
         //
+        $car = Car::findOrFail($id);
+
+        return view('cars.show', compact('car'));
     }
 
     /**
@@ -70,6 +74,9 @@ class CarController extends Controller
     public function edit($id)
     {
         //
+        $car = Car::findOrFail($id);
+
+        return view('cars.edit', compact('car'));
     }
 
     /**
@@ -82,6 +89,13 @@ class CarController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate($this->validator());
+        $form_data = $request->all();
+
+        $car_to_update = Car::findOrFail($id);
+        $car_to_update->update($form_data);
+
+        return redirect()->route('cars.show', ['car' => $car_to_update->id]);
     }
 
     /**
@@ -93,5 +107,17 @@ class CarController extends Controller
     public function destroy($id)
     {
         //
+        $car_to_destroy = Car::findOrFail($id);
+        $car_to_destroy->delete();
+        return redirect()->route('cars.index');
+    }
+    protected function validator(){
+        return [
+            'brand' => 'required|max:30',
+            'model' => 'required|max:30',
+            'engine_displacement' => 'required|max:30',
+            'doors' => 'required',
+            'img' =>'required'
+        ];
     }
 }
