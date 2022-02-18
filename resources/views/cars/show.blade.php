@@ -10,7 +10,7 @@
             <img src="{{ $car ->img}}" class="card-img-top" alt="{{ $car ->img}}" style="width:250px;">
             <div class="card-body">
                 <h5 class="card-title">{{ $car ->brand}}</h5>
-                <p class="card-text">Model: {{ $car ->model}} $</p>
+                <p class="card-text">Model: {{ $car ->model}}</p>
                 <p class="card-text">Engine Displacement: {{ $car ->engine_displacement}}</p>
                 <p class="card-text">Doors: {{ $car ->doors}}</p>
                 <a href="{{route ('cars.edit', ['car' => $car->id])}}" class="btn btn-primary">Edit</a>
