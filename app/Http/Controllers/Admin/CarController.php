@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Car;
+use App\Http\Controllers\Controller;
+
+
 class CarController extends Controller
 {
     /**
@@ -15,7 +18,7 @@ class CarController extends Controller
     {
         //
         $cars = Car::all();
-        return view('cars.index', compact('cars'));
+        return view('admin.cars.index', compact('cars'));
     }
 
     /**
@@ -25,8 +28,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        //
-        return view('cars.create');
+        
+        return view('admin.cars.create');
     }
 
     /**
@@ -48,7 +51,7 @@ class CarController extends Controller
         $new_car->doors = $form_data['doors'];
         $new_car->img = $form_data['img'];
         $new_car->save();
-        return redirect()->route('cars.show', ['car' => $new_car->id]);
+        return redirect()->route('admin.cars.show', ['car' => $new_car->id]);
     }
 
     /**
@@ -62,7 +65,7 @@ class CarController extends Controller
         //
         $car = Car::findOrFail($id);
 
-        return view('cars.show', compact('car'));
+        return view('admin.cars.show', compact('car'));
     }
 
     /**
@@ -76,7 +79,7 @@ class CarController extends Controller
         //
         $car = Car::findOrFail($id);
 
-        return view('cars.edit', compact('car'));
+        return view('admin.cars.edit', compact('car'));
     }
 
     /**
@@ -95,7 +98,7 @@ class CarController extends Controller
         $car_to_update = Car::findOrFail($id);
         $car_to_update->update($form_data);
 
-        return redirect()->route('cars.show', ['car' => $car_to_update->id]);
+        return redirect()->route('admin.cars.show', ['car' => $car_to_update->id]);
     }
 
     /**
@@ -109,7 +112,7 @@ class CarController extends Controller
         //
         $car_to_destroy = Car::findOrFail($id);
         $car_to_destroy->delete();
-        return redirect()->route('cars.index');
+        return redirect()->route('admin.cars.index');
     }
     protected function validator(){
         return [

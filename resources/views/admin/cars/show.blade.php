@@ -13,10 +13,10 @@
                 <p class="card-text">Model: {{ $car ->model}}</p>
                 <p class="card-text">Engine Displacement: {{ $car ->engine_displacement}}</p>
                 <p class="card-text">Doors: {{ $car ->doors}}</p>
-                <a href="{{route ('cars.edit', ['car' => $car->id])}}" class="btn btn-primary">Edit</a>
+                <a href="{{route ('admin.cars.edit', ['car' => $car->id])}}" class="btn btn-primary">Edit</a>
 
                 <div>
-                    <form action="{{ route('cars.destroy', ['car' => $car->id ])}}" method="POST">
+                    <form action="{{ route('admin.cars.destroy', ['car' => $car->id ])}}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this car?')">Delete</button>

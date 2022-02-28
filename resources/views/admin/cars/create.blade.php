@@ -18,7 +18,7 @@
 
 @section('main_content')
     <div class="container">
-        <form action="{{route('cars.store')}}" method="post">
+        <form action="{{route('admin.cars.store')}}" method="post">
             @csrf
             @method('POST')
 
