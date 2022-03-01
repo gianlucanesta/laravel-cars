@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Car;
 use App\Optional;
+use App\Category;
 use App\Http\Controllers\Controller;
 
 
@@ -30,7 +31,8 @@ class CarController extends Controller
     public function create()
     {
         $optionals = Optional::all();
-        return view('admin.cars.create', compact('optionals'));
+        $categories = Category::all();
+        return view('admin.cars.create', compact('optionals','categories'));
     }
 
     /**
@@ -84,10 +86,11 @@ class CarController extends Controller
     {
         //
         $optionals = Optional::all();
+        $categories = Category::all();
         $car = Car::findOrFail($id);
 
 
-        return view('admin.cars.edit', compact('car', 'optionals'));
+        return view('admin.cars.edit', compact('car', 'optionals','categories'));
     }
 
     /**
@@ -136,7 +139,8 @@ class CarController extends Controller
             'engine_displacement' => 'required|max:30',
             'doors' => 'required',
             'img' =>'required',
-            'optionals' => 'exists:optionals,id'
+            'optionals' => 'exists:optionals,id',
+            'category_id' => 'exists:categories,id|nullable'
         ];
     }
 }
