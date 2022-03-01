@@ -33,6 +33,25 @@
             <input type="model" class="form-control" id="model" name="model" value="{{old('model') ? old('model') : $car->model}}">
           </div>
 
+        <div class="mb-3">
+          <h4>Optionals</h4>
+
+          @foreach ($optionals as $optional)
+            <div class="form-check">
+
+                @if ($errors->any())
+                    <input {{ in_array($optional->id, old('optionals', [])) ? 'checked' : '' }} class="form-check-input" type="checkbox" value="{{ $optional->id }}" id="optionals-{{ $optional->id }}" name="optionals[]">
+                @else
+                    <input {{ $car->optionals->contains($optional) ? 'checked' : '' }} class="form-check-input" type="checkbox" value="{{ $optional->id }}" id="optionals-{{ $optional->id }}" name="optionals[]">
+                @endif
+                
+                <label class="form-check-label" for="optionals-{{ $optional->id }}">
+                    {{ $optional->name }}
+                </label>
+            </div>
+          @endforeach
+        </div>
+
           <div class="mb-3">
             <label for="engine_displacement" class="form-label">Engine</label>
             <input type="text" class="form-control" id="engine_displacement" name="engine_displacement" value="{{old('engine_displacement') ? old('engine_displacement') : $car->engine_displacement}}">

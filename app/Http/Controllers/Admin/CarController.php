@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Car;
+use App\Optional;
 use App\Http\Controllers\Controller;
 
 
@@ -28,8 +29,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        
-        return view('admin.cars.create');
+        $optionals = Optional::all();
+        return view('admin.cars.create', compact('optionals'));
     }
 
     /**
@@ -51,6 +52,11 @@ class CarController extends Controller
         $new_car->doors = $form_data['doors'];
         $new_car->img = $form_data['img'];
         $new_car->save();
+
+        if(isset($form_data['optionals'])) {
+            $new_car->optionals()->sync($form_data['optionals']);
+        }
+
         return redirect()->route('admin.cars.show', ['car' => $new_car->id]);
     }
 
@@ -77,9 +83,11 @@ class CarController extends Controller
     public function edit($id)
     {
         //
+        $optionals = Optional::all();
         $car = Car::findOrFail($id);
 
-        return view('admin.cars.edit', compact('car'));
+
+        return view('admin.cars.edit', compact('car', 'optionals'));
     }
 
     /**
@@ -98,6 +106,12 @@ class CarController extends Controller
         $car_to_update = Car::findOrFail($id);
         $car_to_update->update($form_data);
 
+        if(isset($form_data['optionals'])) {
+            $car_to_update->optionals()->sync($form_data['optionals']);
+        } else {
+            $car_to_update->optionals()->sync([]);
+        }
+
         return redirect()->route('admin.cars.show', ['car' => $car_to_update->id]);
     }
 
@@ -112,6 +126,7 @@ class CarController extends Controller
         //
         $car_to_destroy = Car::findOrFail($id);
         $car_to_destroy->delete();
+        $car_to_destroy->optionals()->sync([]);
         return redirect()->route('admin.cars.index');
     }
     protected function validator(){
@@ -120,7 +135,8 @@ class CarController extends Controller
             'model' => 'required|max:30',
             'engine_displacement' => 'required|max:30',
             'doors' => 'required',
-            'img' =>'required'
+            'img' =>'required',
+            'optionals' => 'exists:optionals,id'
         ];
     }
 }

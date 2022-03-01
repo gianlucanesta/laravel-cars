@@ -11,6 +11,16 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $car ->brand}}</h5>
                 <p class="card-text">Model: {{ $car ->model}}</p>
+                
+                <div class="my-3">
+                    Optionals:
+                    @forelse ($car->optionals as $optional)
+                        {{ $optional->name }}{{ !$loop->last ? ',' : '' }}
+                    @empty
+                        Nessun optional
+                    @endforelse
+                </div>
+
                 <p class="card-text">Engine Displacement: {{ $car ->engine_displacement}}</p>
                 <p class="card-text">Doors: {{ $car ->doors}}</p>
                 <a href="{{route ('admin.cars.edit', ['car' => $car->id])}}" class="btn btn-primary">Edit</a>
