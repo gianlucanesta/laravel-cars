@@ -14,4 +14,8 @@ class Car extends Model
         'doors',
         'img',
     ];
+
+    public function optionals() {
+        return $this->belongsToMany('App\Optional');
+    }
 }
