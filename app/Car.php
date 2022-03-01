@@ -13,9 +13,14 @@ class Car extends Model
         'engine_displacement',
         'doors',
         'img',
+        'category_id'
     ];
 
     public function optionals() {
         return $this->belongsToMany('App\Optional');
+    }
+
+    public function category(){
+        return $this->belongsTo('App\Category');
     }
 }

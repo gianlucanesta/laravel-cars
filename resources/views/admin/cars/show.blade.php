@@ -11,6 +11,10 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $car ->brand}}</h5>
                 <p class="card-text">Model: {{ $car ->model}}</p>
+
+                <div>
+                    Categoria: {{ $car->category ? $car->category->name : 'nessuno' }}
+                </div>
                 
                 <div class="my-3">
                     Optionals:
@@ -20,6 +24,7 @@
                         Nessun optional
                     @endforelse
                 </div>
+
 
                 <p class="card-text">Engine Displacement: {{ $car ->engine_displacement}}</p>
                 <p class="card-text">Doors: {{ $car ->doors}}</p>
